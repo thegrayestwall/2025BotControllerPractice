@@ -66,7 +66,8 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MAX_TRANSLATION);
 
-    private final CommandXboxController driverController = new CommandXboxController(0);
+    private final Joystick flightstick = new Joystick(0);
+    private final CommandXboxController driverController = new CommandXboxController(4);
     private final ButtonBoard buttonBoard = new ButtonBoard(1, 2);
     private final CommandXboxController operatorController = new CommandXboxController(3);
 
@@ -97,18 +98,18 @@ public class RobotContainer {
             drivetrain.setDefaultCommand(
                 new DriveState(
                     drivetrain, 
-                    () -> Math.pow(driverController.getLeftY(), 3),
-                    () -> Math.pow(driverController.getLeftX(), 3),
-                    () -> Math.pow(driverController.getRightX(), 3)
+                    () -> Math.pow(flightstick.getY(), 3),
+                    () -> Math.pow(flightstick.getX(), 3),
+                    () -> Math.pow(flightstick.getZ(), 3)
                 )
             );
         } else {
             drivetrain.setDefaultCommand(
                 new DriveState(
                     drivetrain, 
-                    driverController::getLeftY,
-                    driverController::getLeftX,
-                    driverController::getRightX
+                    flightstick::getY,
+                    flightstick::getX,
+                    flightstick::getZ,
                 )
             ); // Andy code cause andy built like a beast with linear.
         }
